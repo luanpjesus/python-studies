@@ -15,3 +15,31 @@ def about():
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
+    
+    
+#REST - REPRESENTATIONAL STATE TRANSFER
+#ESTILO DE ARCH PARA API
+
+
+
+#RESTFUL
+#QUANDO A API RESPEITA TODOS OS PRINCIPIOS DO REST
+
+
+
+#  - HTTP
+#        *GET
+#        *POST
+#        *DELETE
+#        *PUT
+#        *PATCH
+
+
+
+
+ 
+
+
+    
+    
