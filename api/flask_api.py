@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from projeto.api.models.task import Task
+from models.task import Task
 
 app = Flask(__name__)
 
@@ -45,21 +45,52 @@ def get_task():
     
     return jsonify(output), 200
 
-
-
-
-
-@app.route('/tasks', methods =['GET'])
-def get_tasks():
-    task_list = [task.to_dict() for task in tasks]
-    output = {
-        "task": task_list,
-        "total_task": 0
-}   
-    return jsonify(output)
+@app.route('/tasks/<int:id>', methods=['GET'])
+def get_tasks(id):
+        
+    for t in tasks:
+        if t.id == id:
+            return jsonify(t.to_dict())
+    return jsonify({"message" : "Nao foi possivel encontrar a atividade"}), 404    
     
     
-               
+@app.route('/tasks/<int:id>', methods=['PUT']) 
+def update_task(id):
+    task = None
+    for t in tasks:
+        if t.id == id:
+            task = t
+    print(task)        
+    if task == None:
+        return jsonify({"message":"Nao possivel encontrar a atividade"}), 404    
+    data = request.get_json()
+    task.title = data['title'] 
+    task.description = data['description'] 
+    task.completed = data['completed']
+    print(task)
+    return jsonify({"message":"Tarefa atualizada com sucesso"})
+       
+    
+@app.route('/tasks/<int:id>', methods=['DELETE'])
+def delete_task(id):
+    task = None
+    for t in tasks:
+        if t.id == id:
+            task = t
+    print(task)        
+    if not task:
+        return jsonify({"message": "Nao foi possivel encontrar a atividade"}), 404
+    tasks.remove(task)
+    return jsonify({"message": "Tarefa deletada com sucesso"})
+
+
+
+# @app.route('/user/')
+# def get_update():
+    
+
+    
+         
             
 
 if __name__ == "__main__":
