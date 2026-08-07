@@ -16,7 +16,23 @@ def test_create_task():
     tasks.append(response_json["id"])
 
 
-# def test_get_tasks():
-#    get_new_task =
+def test_get_tasks():
+    response = requests.get(
+        f"{BASE_URL}/tasks",
+    )
+    # No caso do get nao precisa para o json, pq nao tem post so vai pegar os dados
+    assert response.status_code == 200
+    # Esse me todo recupera e salva o json da request na variavel
+    response_json = response.json()
+    print(response_json)
+    assert "task" in response_json
+    assert "total_tasks" in response_json
 
-#   response = requests.post(f"{BASE_URL}/tasks", json=get_new_task)
+
+def test_get_task():
+    if tasks:
+        task_id = tasks[0]
+        response = requests.get(f"{BASE_URL}/tasks/{task_id}")
+        assert response.status_code == 200
+        response_json = response.json()
+        assert task_id == response_json["id"]
